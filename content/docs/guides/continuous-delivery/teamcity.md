@@ -11,16 +11,16 @@ aliases:
 - /docs/console/continuous-delivery/jetbrains-teamcity/
 ---
 
-This page details how to use [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) to deploy some sample infrastructure
+This page details how to use [JetBrains TeamCity](https://www.jetbrains.com/teamcity/) to deploy a sample infrastructure
 to AWS using Pulumi.
 
-## Prerequisities
+## Prerequisites
 
 - A working installation of TeamCity
 - An account on the [Pulumi Console](https://app.pulumi.com).
 - The latest version of Pulumi. Installation instructions are [here]({{< relref "/docs/get-started/install" >}}).
 - Setup a new project and [stack]({{< relref "/docs/intro/concepts/stack" >}}) using one of our 
-[Get Started]({{< relref "/docs/get-started" >}}) guides or simply by running [`pulumi new`]({{< relref "/docs/reference/cli/pulumi_new.md" >}})
+[Get Started]({{< relref "/docs/get-started" >}}) guides or by running [`pulumi new`]({{< relref "/docs/reference/cli/pulumi_new.md" >}})
 and choosing one of the many templates that are available.
 
 ## Sample Project
@@ -31,23 +31,23 @@ your TeamCity server.
 
 ## Configuring the TeamCity Project
 
-For the purposes of this guide, we are going to build out a TeamCity project via the UI. An alternative way to do this, would
+For the purposes of this guide, we are going to build a TeamCity project via the UI. An alternative way to do this, would
 be to use the [Kotlin DSL](https://www.jetbrains.com/help/teamcity/kotlin-dsl.html). When creating a new project via the UI,
 we will see the following creation wizard:
 
 ![TeamCity Project Creation Wizard](/images/docs/reference/teamcity/new-project.png)
 
-We are going to follow the TeamCity project setup `From a repository URL`. This means we can enter the URL to the 
+Follow the TeamCity project setup `From a repository URL`. This means we can enter the URL to the 
 [Pulumi Examples Repository](https://github.com/pulumi/examples). This specific respository is open source, so we do not
 need to enter a `Username` or a `Password`. We can then `Proceed`.
 
-TeamCity will tell us if it can successfully connect to the repository. If it can, then it will ask us to give this project
-a name and to create a [build configuration])(https://www.jetbrains.com/help/teamcity/build-configuration.html) name.
+TeamCity will tell us if it can successfully connect to the repository. If it can, then it will ask us to name this project
+and to create a [build configuration])(https://www.jetbrains.com/help/teamcity/build-configuration.html) name.
 
 ![TeamCity Project Naming](/images/docs/reference/teamcity/project-name.png)
 
-Let's call the project `Pulumi Example` and let's create a build configuration called `Development Environment`. We can 
-`Proceed` to the next step. TeamCity will then try and find any build steps that it can find in the repository. We can click
+Let's call the project `Pulumi Example` and create a build configuration called `Development Environment`. We can 
+`Proceed` to the next step. TeamCity will try to find any build steps in the repository. We can click
 the link that says `configure build steps manually` and then we can start creating our project.
 
 A TeamCity configuration is made of [build steps](https://www.jetbrains.com/help/teamcity/configuring-build-steps.html).
@@ -81,7 +81,7 @@ Again, we are going to chose a `Command Line` build runner and we can create the
 
 ### Restoring NPM Dependencies
 
-The next build step we are going to create is to restore the NPM dependencies required to deploy our application. Let's create
+The next build step is to restore the NPM dependencies required to deploy our application. Let's create
 a new `Command Line` build runner and create the build step as follows
 
 ![Restore Dependencies](/images/docs/reference/teamcity/restore-dependencies.png)
@@ -95,14 +95,14 @@ as follows
 
 ### Pulumi Up...
 
-The last build step we need to create is to instruct TeamCity to run the `pulumi up` command. We can create a `Command Line`
+The last build step to create is to instruct TeamCity to run the `pulumi up` command. We can create a `Command Line`
 runner and configure it as follows
 
 ![Pulumi Up](/images/docs/reference/teamcity/pulumi-up.png)
 
 ### Configuring Build Parameters
 
-The last thing we need to do before we `run` the build is to configure the parameters needed to allow Pulumi to be executed.
+The last thing to do before we `run` the build is to configure the parameters needed to allow Pulumi to be executed.
 There are a number of things we need to set here:
 
 * AWS_ACCESS_KEY_ID     - environment variable
